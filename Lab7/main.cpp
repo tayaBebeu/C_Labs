@@ -12,7 +12,7 @@ void testSecondFunction();
 int main()
 {
     char new_student[41];//фамилия студента
-    printf_s("Enter the student's last name: ");
+    printf_s("Enter the student's last name: "); //Ввод имени студента
     gets(new_student);
 
     int n;//кол-во студентов - 1(последняя строка пустая) в массиве
