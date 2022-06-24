@@ -16,39 +16,46 @@ int main()
     gets(new_student);
 
     int n;//кол-во студентов - 1(последняя строка пустая) в массиве
-    printf_s("Enter the number of students in the list: ");
+    printf_s("Enter the number of students in the list up to 30: ");
     scanf_s("%d", &n);
-    getchar();
-    if ((n == 0) || (n < 0) || isdigit(n) == 0)
+
+    if ((n == 0) || (n < 0) || (n > 30)) //проверка на: список не равен 0, отрицательному числу и букве
     {
         printf_s("\nno solution");
-    } else
+    }
+    else
     {
         printf_s("\nEnter the last names of the students:\n");
-        char students[30][41];//вводимый список студентов
-        for (size_t k = 0; k < n; k++) //номер студента в списке
+        getchar();
+        char students[n][41];//вводимый список студентов
+        for (int k = 0; k < n - 1; k++) //номер студента в списке
         {
-            gets(students[k]);
-
+            gets(students[k]); //cчитываем фамилии
         }
 
-        for (int i = 0; i <= (n - 1); i++) //проверка на правильную сортировку
+        for (int i = 0; i < n - 1; i++) //проверка на правильную сортировку
         {
+            printf_s("\n I == %d\n", &i);
             for (int j = 0; j < 41; j++)
             {
+                printf_s("\nJ== %d\n", &j);
+                printf_s("\nI2 == %d\n", &i);
                 if (students[i][j] > students[i + 1][j])
                 {
                     printf_s("Invalid input data\n");
-                    j = 41;
-                    i = 30;
+                   // j = 41;
+                    //i = n;
                 }
-                if (students[i][j] < students[i + 1][j])
+                else if (students[i][j] < students[i + 1][j])
                 {
                     j = 41;
                 }
+                else if (students[i][j] == students[i + 1][j])
+                {
+                    j = j + 1;
+                }
             }
         }
-
 
         int pos = searchString(students, n, new_student);
         printf_s("%d", pos);
@@ -63,15 +70,16 @@ int main()
         {
             printf_s("%s\n", students[i]);
         }
+    }
 
         return 0;
     }
-}
+
 
 int searchString(const char stringList[30][41], int count, const char str[41])//1 функция
 {
-    int pos = 0; //позиция искомой фамилии
-    for (int i = 0; i < count; i++)
+    int pos = 0; //искомая позиция введенной фамилии
+    for (int i = 0; i < count - 1; i++)
     {
         for (int j = 0; j < strlen(stringList[i]); j++)
         {
@@ -80,7 +88,8 @@ int searchString(const char stringList[30][41], int count, const char str[41])//
             if (tmp > tmp2)
             {
                 pos = i;
-            } else if (tmp < tmp2)
+            }
+            else if (tmp < tmp2)
             {
                 i++;
                 j = -1;
