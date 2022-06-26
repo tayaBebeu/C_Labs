@@ -45,14 +45,13 @@ int main()
         if (n > 2)
         {
             int compareStrings = (strcmp(students[i], students[i + 1])); //Сравнить две строки
-            cout << compareStrings;
             if (compareStrings > 0) //если функция strcmp возвращает число > 0, значит первая строка больше второй
             {                       //если число < 0 - первая строка меньше второй
-                //если число == 0 - строки эквивалентны
+                                    //если число == 0 - строки эквивалентны
                 printf_s("Invalid input data\n");
             }
                 int pos = searchString(students, n, new_student);
-                printf_s("%d", pos);
+                printf_s("The desired position: %d", pos);
 
                 slideStringList(students, 30, pos);
 
@@ -90,7 +89,14 @@ int searchString(const char stringList[30][41], int count, const char str[41])//
             }
         }
     }
-    return pos + 1;
+    if (pos == count)
+    {
+        return -1;
+    }
+    else
+    {
+        return pos + 1;
+    }
 }
 
 int slideStringList(char stringList[30][41], int count, int strIndex)//2 функция
