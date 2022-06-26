@@ -3,77 +3,71 @@
 #include <cstring>
 #include <ctype.h>
 
+using namespace std;
+
+
 int slideStringList(char stringList[30][41], int count, int strIndex); //прототип функции
 int searchString(const char stringList[30][41], int count, const char str[41]);
 
 void testFirstFunction();
+
 void testSecondFunction();
 
 int main()
 {
     char new_student[41];//фамилия студента
-    printf_s("Enter the student's last name: "); //Ввод имени студента
+    printf("Enter the student's last name: "); //Ввод имени студента
+    //cout << "Enter the student's last name: " << endl;
+
     gets(new_student);
 
     int n;//кол-во студентов - 1(последняя строка пустая) в массиве
-    printf_s("Enter the number of students in the list up to 30: ");
+    printf("Enter the number of students in the list up to 30: ");
     scanf_s("%d", &n);
 
-    if ((n == 0) || (n < 0) || (n > 30)) //проверка на: список не равен 0, отрицательному числу и букве
+    if ((n == 0) || (n < 2) || (n > 30)) //проверка на: список не равен 0, отрицательному числу и букве
     {
         printf_s("\nno solution");
     }
     else
     {
-        printf_s("\nEnter the last names of the students:\n");
-        getchar();
         char students[n][41];//вводимый список студентов
+
+        printf_s("\nEnter the last names of the students:\n");
+//        getchar();
         for (int k = 0; k < n - 1; k++) //номер студента в списке
         {
-            gets(students[k]); //cчитываем фамилии
+            scanf("%s", students[k]);
+//            gets(students[k]); //cчитываем фамилии
         }
 
-        for (int i = 0; i < n - 1; i++) //проверка на правильную сортировку
+        int i = 0;
+        if (n > 2)
         {
-            printf_s("\n I == %d\n", &i);
-            for (int j = 0; j < 41; j++)
-            {
-                printf_s("\nJ== %d\n", &j);
-                printf_s("\nI2 == %d\n", &i);
-                if (students[i][j] > students[i + 1][j])
-                {
-                    printf_s("Invalid input data\n");
-                   // j = 41;
-                    //i = n;
-                }
-                else if (students[i][j] < students[i + 1][j])
-                {
-                    j = 41;
-                }
-                else if (students[i][j] == students[i + 1][j])
-                {
-                    j = j + 1;
-                }
+            int compareStrings = (strcmp(students[i], students[i + 1])); //Сравнить две строки
+            cout << compareStrings;
+            if (compareStrings > 0) //если функция strcmp возвращает число > 0, значит первая строка больше второй
+            {                       //если число < 0 - первая строка меньше второй
+                //если число == 0 - строки эквивалентны
+                printf_s("Invalid input data\n");
             }
-        }
+                int pos = searchString(students, n, new_student);
+                printf_s("%d", pos);
 
-        int pos = searchString(students, n, new_student);
-        printf_s("%d", pos);
+                slideStringList(students, 30, pos);
 
-        slideStringList(students, 30, pos);
-
-        for (int i = 0; i < 41; i++)
-        {
-            students[pos][i] = new_student[i];
-        }
-        for (int i = 0; i < 30; i++)
-        {
-            printf_s("%s\n", students[i]);
+                for (int i = 0; i < 41; i++)
+                {
+                    students[pos][i] = new_student[i];
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    printf_s("%s\n", students[i]);
+                }
+            //return 0;
         }
     }
-
-        return 0;
-    }
+}
 
 
 int searchString(const char stringList[30][41], int count, const char str[41])//1 функция
